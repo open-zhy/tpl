@@ -1,9 +1,10 @@
 package lib
 
 import (
-	"github.com/imdario/mergo"
+	"fmt"
+	"github.com/ghodss/yaml"
+	//"github.com/open-zhy/tpl/yamlmapstr"
 	"github.com/pkg/errors"
-	"gopkg.in/yaml.v2"
 )
 
 func AssignValuesFromFile(fileName string, values *map[string]interface{}) (err error) {
@@ -19,12 +20,13 @@ func AssignValuesFromFile(fileName string, values *map[string]interface{}) (err 
 	}
 
 	// file values is in prior
-	//*values = mergeMaps(fileValues, *values)
 	tempValues := map[string]interface{}{}
-	_ = mergo.Merge(tempValues, fileValues)
-	_ = mergo.Merge(tempValues, *values)
+	tempValues = mergeMaps(tempValues, fileValues)
+	tempValues = mergeMaps(tempValues, *values)
 
-	return
+	*values = tempValues
+
+	return nil
 }
 
 func mergeMaps(a, b map[string]interface{}) map[string]interface{} {
@@ -38,6 +40,8 @@ func mergeMaps(a, b map[string]interface{}) map[string]interface{} {
 				if bv, ok := bv.(map[string]interface{}); ok {
 					out[k] = mergeMaps(bv, v)
 					continue
+				} else {
+					fmt.Printf("--> no: %s\n, %T", k, out[k])
 				}
 			}
 		}
