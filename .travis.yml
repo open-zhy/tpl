@@ -1,0 +1,28 @@
+dist: bionic
+language: go
+env:
+- GO111MODULE=on
+go:
+- 1.13.x
+git:
+  depth: 1
+install: true
+before_script:
+- curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ${GOPATH}/bin v1.20.0
+- go get github.com/mitchellh/gox@v1.0.1
+script:
+- make fmt test build-cross
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: t7xFayFQw+BeGcuWlB7Td3cSVBICcsct8stGJwSO0g8890XIc5zxFd4hZiDj6FhCadAObnezIJDbMuJf97gXx7zHEmXRwNAoSLBmBOaH5jcP13zpCU2vy/04K1596wVOapaW1N/xIbaqWAFj7uFwMfC3p2lsPxlmRYlltTkXLQg90RqG3yZsqtSNoRjZMvxXlc+OVQuzJLge19WYAJfZ2LI/+0tHGyf7bfL2p1chgTE6oHb31mwQYJ1wvtrsXdnNp80srNFQbJYS4B5zKtIuAeYx+RfYI/tNi/xxHyrUlYUBrVQdNzqjmTNAz9vKt4dQyBTIHKr6fhTo1MyAjt6GxojQkteq305jgegzIMQSYBsfMsG3G1q2elkvtOusYRzRr2PUYEUYr6BVD3QHQ4z4L7nuPeX1AbwAfaYAgKQrVk3G/iPhLOKPi/xoerHXUqPsaqJ0L7sxhfTN2YZth4aoVG0rzZOWoRXb1C0VCvRf4+qY5dmPlfQDe5jGtGTR9Y4Mmr6+7AmYhbRY0AeTIR/IDaZXa28U+yY66P2RsIevpRc1omq1WgLS0Gj0w0na9o5ctgNba+RM77yQIDtE0APdkaGBYJR0voQ5ZJBPvhBWHG1i5lrKXOq3HotpUrnjQ74wXIvmCKNAGlRmk2i7sxqt0HyTRBrfyiEFILct05wbMPs=
+  file:
+  - dist/tpl-darwin-amd64
+  - dist/tpl-linux-386
+  - dist/tpl-linux-amd64
+  - dist/tpl-linux-arm
+  - dist/tpl-linux-arm64
+  - dist/tpl-windows-amd64.exe
+  on:
+    repo: open-zhy/tpl

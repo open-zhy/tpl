@@ -10,9 +10,8 @@ require (
 	github.com/google/uuid v1.1.1 // indirect
 	github.com/helm/helm v2.16.1+incompatible
 	github.com/huandu/xstrings v1.2.1 // indirect
-	github.com/imdario/mergo v0.3.8
+	github.com/imdario/mergo v0.3.8 // indirect
 	github.com/mitchellh/copystructure v1.0.0 // indirect
 	github.com/pkg/errors v0.8.1
 	github.com/spf13/cobra v0.0.5
-	gopkg.in/yaml.v2 v2.2.2
 )

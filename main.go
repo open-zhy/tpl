@@ -4,6 +4,6 @@ import (
 	"github.com/open-zhy/tpl/cmd"
 )
 
-func main()  {
+func main() {
 	cmd.Execute()
 }
