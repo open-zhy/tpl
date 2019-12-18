@@ -6,8 +6,7 @@ import (
 )
 
 var (
-	Version = "0.0.1"
-	Build   = "unknown"
+	Version = "0.1.0"
 )
 
 var rootCmd = &cobra.Command{
