@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/helm/helm/pkg/strvals"
 	"github.com/open-zhy/tpl/lib"
+	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"log"
 )
@@ -12,6 +14,7 @@ var (
 	directories []string
 	separator   string
 	fileValues  string
+	setValues   []string
 )
 
 func init() {
@@ -21,6 +24,7 @@ func init() {
 	resolveCmd.PersistentFlags().StringArrayVarP(&directories, "directories", "d", []string{}, "directories to scan")
 	resolveCmd.PersistentFlags().StringVarP(&separator, "separator", "t", "", "line break separator between each resolved")
 	resolveCmd.PersistentFlags().StringVar(&fileValues, "values", "", "yaml file that has all values to apply")
+	resolveCmd.PersistentFlags().StringArrayVar(&setValues, "set", []string{}, "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)")
 }
 
 var resolveCmd = &cobra.Command{
@@ -30,6 +34,13 @@ var resolveCmd = &cobra.Command{
 		// The values to pass to the template,
 		// it's just empty since no --set neither --values has been set
 		values := map[string]interface{}{}
+
+		// User specified a value via --set
+		for _, value := range setValues {
+			if err := strvals.ParseInto(value, values); err != nil {
+				log.Fatal(errors.Wrap(err, "failed parsing --set data"))
+			}
+		}
 
 		if fileValues != "" {
 			if err := lib.AssignValuesFromFile(fileValues, &values); err != nil {
