@@ -7,7 +7,7 @@ TARGET_OBJS ?= darwin-amd64.tar.gz darwin-amd64.tar.gz.sha256 linux-amd64.tar.gz
 GO        	?= go
 BINDIR    	:= $(CURDIR)/bin
 BINARIES  	:= tpl
-TAG			:= =$(shell git describe --tags --abbrev=0)
+TAG			:= $(shell git describe --tags --abbrev=0)
 GOFLAGS   	:=
 LDFLAGS   	:= -w -s -X github.com/open-zhy/tpl/cmd.Version=$(TAG)
 PKG       	:= $(shell go mod vendor)
@@ -16,7 +16,7 @@ PKG       	:= $(shell go mod vendor)
 PKG_GOX := github.com/mitchellh/gox@v1.0.1
 
 build:
-	CGO_ENABLED=0 $(GO) build -i $(GOFLAGS) -ldflags '$(LDFLAGS)' -o '$(BINDIR)/$(BINARIES)'
+	CGO_ENABLED=0 $(GO) build $(GOFLAGS) -ldflags '$(LDFLAGS)' -o '$(BINDIR)/$(BINARIES)'
 
 build-cross: LDFLAGS += -extldflags "-static"
 build-cross:
