@@ -8,7 +8,7 @@ require (
 	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/ghodss/yaml v1.0.0
 	github.com/google/uuid v1.1.1 // indirect
-	github.com/helm/helm v2.16.1+incompatible
+	github.com/helm/helm v2.16.8+incompatible
 	github.com/huandu/xstrings v1.2.1 // indirect
 	github.com/imdario/mergo v0.3.8 // indirect
 	github.com/mitchellh/copystructure v1.0.0 // indirect
